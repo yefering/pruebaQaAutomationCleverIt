@@ -1,0 +1,186 @@
+{
+	"info": {
+		"_postman_id": "beea4568-c3a1-4c8b-85de-a6e8f516afb9",
+		"name": "Ejercicio 2 (QAA-02) - Automatización de API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "users (datosEstaticos)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Estado es 200\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"// parsear respuesta a JSON\r",
+							"var jsonData = pm.response.json();\r",
+							"// iterar a traves de una list de objetos JSON\r",
+							"jsonData.each(function(item){\r",
+							"if (item.email === \"Julianne.OConner@kory.org\") {\r",
+							"tests[\"Name matches\"] = item.name == pm.environment.get(\"NAME\");\r",
+							"tests[\"Username\"] = item.username == pm.environment.get(\"USERNAME\");\r",
+							"tests[\"Street matches\"] = \r",
+							"item.address.street == pm.environment.get(\"STREET\");\r",
+							"tests[\"City matches\"] = \r",
+							"item.address.city == pm.environment.get(\"CITY\");\r",
+							"}})});"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"// seteamos un lote de prueba para Julianne.OConner@kory.org\r",
+							"pm.environment.set(\"NAME\", \"Patricia Lebsack\");\r",
+							"pm.environment.set(\"USERNAME\", \"Karianne\");\r",
+							"pm.environment.set(\"STREET\", \"Hoeger Mall\");\r",
+							"pm.environment.set(\"CITY\", \"South Elvis\");\r",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/users",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "users (datosDinamicos)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Estado es 200\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"// parsear respuesta a JSON\r",
+							"var jsonData = pm.response.json();\r",
+							"// iterar a traves de una list de objetos JSON\r",
+							"jsonData.each(function(item){\r",
+							"if (item.email === \"Julianne.OConner@kory.org\") {\r",
+							"tests[\"Name matches\"] = item.name == pm.environment.get(\"NAME\");\r",
+							"tests[\"Username\"] = item.username == pm.environment.get(\"USERNAME\");\r",
+							"tests[\"Street matches\"] = \r",
+							"item.address.street == pm.environment.get(\"STREET\");\r",
+							"tests[\"City matches\"] = \r",
+							"item.address.city == pm.environment.get(\"CITY\");\r",
+							"}})});"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"// seteamos un lote de prueba para Julianne.OConner@kory.org\r",
+							"pm.environment.set(\"NAME\", \"Patricia Lebsack\");\r",
+							"pm.environment.set(\"USERNAME\", \"Karianne\");\r",
+							"pm.environment.set(\"STREET\", \"Hoeger Mall\");\r",
+							"pm.environment.set(\"CITY\", \"South Elvis\");\r",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/users",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "posts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var list_of_post_ids = [];\r",
+							"\r",
+							"pm.test(\"Main Test\", function () {\r",
+							"\r",
+							"     // Parse response to JSON\r",
+							"     \r",
+							"     var jsonData = pm.response.json();\r",
+							"     jsonData.each(function(item){\r",
+							"          \r",
+							"     list_of_post_ids.push(item.id);\r",
+							"\r",
+							"\r",
+							"     // Condition: Status code is 200\r",
+							"     if(pm.response.code === 200) {\r",
+							"        console.log(\"It's 200\")\r",
+							"        tests[\"200 specific test of post_ids\"] = 9\r",
+							"}\r",
+							"\r",
+							"\r",
+							"     // Condition: Status code is 403\r",
+							"     if(pm.response.code === 403) {\r",
+							"        console.log(\"It's 403\")\r",
+							"        tests[\"403 specific test of post_ids\"] = 2\r",
+							"        tests[\"Another 403 specific test of post_ids\"] = 5\r",
+							"}})})"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts?userId={{USER_ID}}",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "{{USER_ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
